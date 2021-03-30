@@ -1,0 +1,23 @@
+<div class="friends">
+    <div class="friends__header">
+        <img src="../../../assets/img/Гриб.svg" class="friends__header-label">
+        <div class="">Друзья</div>
+    </div>
+    <div class="friends__contnent">
+        <div class="friends__contnent__block">
+            <img src="../../../assets/img/search.svg" class="friends__contnent__label">
+            <input [(ngModel)]="search" type="text" name="new-search" placeholder="Поиск" >
+        </div>
+        <div class="friends__contnent__block">
+            <img src="../../../assets/img/plus_small.svg" class="friends__contnent__label">
+            <input [(ngModel)]="friend" type="text" name="new-friend" placeholder="Добавить друга">
+        </div>
+        <div class="friends__contnent__friends" *ngIf="friends">
+            <div class="friends__contnent__friends__friend" *ngFor="let friend of friends" >
+                <img src="../../../assets/img/Гриб.svg" class="friends__contnent__label">
+                <div class="text">{{friend.Name}}</div>
+            </div>
+        </div>
+    </div>
+    <app-navigation></app-navigation>
+</div>

@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="score">
+        <div class="component"></div>
+        <div class="score__display">
+            <img src="../../assets/img/Ellipse-grey.svg" class="ellips-grey">
+            <div class="score__money">{{this.money}} P</div>
+        </div>
+    </div>
+    <div class="score__all" >
+        <div *ngFor="let score of user.scores">
+            <div>{{score.number}}</div>
+            <div class="score__all__display">
+                <img src="../../assets/img/Ellipse-grey-small.svg" class="ellips-grey-small">
+                <div class="score__all__money">{{score.money}} P</div>
+            </div>
+        </div>
+    </div>
+    <div class="operations">
+        <div class="operations__header">
+            <div class="operations__header__text"> Операции</div>
+        </div>
+        <div class="operations__block">
+            <div class="Transfer">
+                <img src="../../assets/img/Transfer.svg" class="Transfer__img">
+                <div>Перевод</div>
+            </div>
+            <div class="Replenishment">
+                <img src="../../assets/img/Replenishment.svg" class="Replenishment__img">
+                <div>Пополнение</div>
+            </div>
+        </div>
+    </div>
+    <app-navigation></app-navigation>
+</div> 
+

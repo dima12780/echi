@@ -1,0 +1,21 @@
+<div class="history">
+    <div class="history__header">
+        <img src="../../../assets/img/Гриб.svg" class="history__header-label">
+        <div class="">История</div>
+    </div>
+    <div class="history__contnent">
+        <div class="history__contnent__block" *ngFor="let operation of operations">
+            <div class="history__contnent__block-date">{{operation.date}}</div>
+            <div class="history__contnent__block__display">
+                <div class="history__contnent__block-score">{{operation.score}}</div>
+                <div class="history__contnent__block-time">{{operation.time}}</div>
+            </div>
+            <div class="history__contnent__block-operation" [class.consumption__color]="operation.balance">{{operation.balance? "+" : "-" }} {{operation.money}} P</div>
+        </div>
+    </div>
+    <div class="history__batton">
+        <img src="../../../assets/img/income.svg" (click)="getHistory(true)">
+        <img src="../../../assets/img/consumption.svg" (click)="getHistory(false)">
+    </div>
+    <app-navigation></app-navigation>
+</div>
