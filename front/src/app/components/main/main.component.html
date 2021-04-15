@@ -7,11 +7,13 @@
         </div>
     </div>
     <div class="score__all" >
-        <div *ngFor="let score of user.scores">
-            <div>{{score.number}}</div>
-            <div class="score__all__display">
-                <img src="../../assets/img/Ellipse-grey-small.svg" class="ellips-grey-small">
-                <div class="score__all__money">{{score.money}} P</div>
+        <div *ngIf="this.user">
+            <div *ngFor="let score of this.user.scores">
+                <div>{{score.number}}</div>
+                <div class="score__all__display">
+                    <img src="../../assets/img/Ellipse-grey-small.svg" class="ellips-grey-small">
+                    <div class="score__all__money">{{score.money}} P</div>
+                </div>
             </div>
         </div>
     </div>

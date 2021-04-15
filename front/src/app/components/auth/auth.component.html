@@ -8,8 +8,8 @@
     </div>
     <div class="errno" *ngIf="errno">{{errno}}</div>
     <div class="authorization__block">
-        <div class="button" > 
-            <div (click)="Auth(name, password)" class="button-text">Войти</div>
+        <div class="button" (click)="Auth(name, password)"> 
+            <div class="button-text">Войти</div>
         </div>
         <div class="button" routerLink="/registr">
             <div class="button-text">Регистрация</div>

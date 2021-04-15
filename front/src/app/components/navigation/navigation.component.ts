@@ -10,8 +10,6 @@ export class NavigationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // let user = JSON.parse(localStorage.user);
-    // console.log(user);
   }
 
 }

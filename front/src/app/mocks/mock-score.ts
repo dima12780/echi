@@ -24,5 +24,9 @@ export const Scores: score[] = [
     {
         number: "9601-7098-1702",
         money: 12000
+    },
+    {
+        number: "9601-6666-6666",
+        money: 12000000
     }
 ]

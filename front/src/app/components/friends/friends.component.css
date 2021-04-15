@@ -44,15 +44,44 @@
 .friends__contnent__friends{
     overflow-y: scroll;
 }
-.friends__contnent__friends__friend{
+.friends__contnent__friends__block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.friends__contnent__friends__block__friend{
     display: flex;
     flex-direction: row;
     justify-content: right;
     align-items: center;
     height: 40px;
+    width: 360px;
     background-color: #C4C4C4;
     margin-bottom: 1px;
 }
 .text{
     margin-left: 25px;
+}
+.friends__contnent__friends__block__batton{
+    height: 50px;
+    width: 360px;
+    margin-bottom: 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    background-color:  #C4C4C4;
+}
+.batton{
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    height: 35px;
+    width: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #94179D;
+    color: white;
 }

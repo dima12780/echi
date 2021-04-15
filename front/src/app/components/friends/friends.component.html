@@ -4,18 +4,29 @@
         <div class="">Друзья</div>
     </div>
     <div class="friends__contnent">
-        <div class="friends__contnent__block">
-            <img src="../../../assets/img/search.svg" class="friends__contnent__label">
-            <input [(ngModel)]="search" type="text" name="new-search" placeholder="Поиск" >
-        </div>
-        <div class="friends__contnent__block">
-            <img src="../../../assets/img/plus_small.svg" class="friends__contnent__label">
-            <input [(ngModel)]="friend" type="text" name="new-friend" placeholder="Добавить друга">
-        </div>
-        <div class="friends__contnent__friends" *ngIf="friends">
-            <div class="friends__contnent__friends__friend" *ngFor="let friend of friends" >
-                <img src="../../../assets/img/Гриб.svg" class="friends__contnent__label">
-                <div class="text">{{friend.Name}}</div>
+        <div *ngIf="allFriends">
+            <div class="friends__contnent__block">
+                <img src="../../../assets/img/plus_small.svg" class="friends__contnent__label">
+                <input type="text" name="new-friend" placeholder="Добавить друга" [(ngModel)]="search" (ngModelChange)='searchName(true, search)' (ngModelChange)='cleaningInput(false)' #myInputOne>
+            </div>
+            <div class="friends__contnent__block">
+                <img src="../../../assets/img/search.svg" class="friends__contnent__label">
+                <input type="text" name="new-search" placeholder="Поиск" [(ngModel)]="searchFriend" (ngModelChange)='searchName(false, searchFriend)' (ngModelChange)='cleaningInput(true)' #myInputTwo>
+            </div>
+            <div class="friends__contnent__friends" *ngIf="searchFrends">
+                <div class="friends__contnent__friends__block" *ngFor="let friend of searchFrends">
+                    <div class="friends__contnent__friends__block__friend"  (click)="onSelect(friend)">
+                        <img src="../../../assets/img/Гриб.svg" class="friends__contnent__label">
+                        <div class="text">{{friend.Name}}</div>
+                    </div>
+                    <div *ngIf="this.selectedFriend">
+                        <div class="friends__contnent__friends__block__batton" *ngIf="this.selectedFriend.Name === friend.Name">
+                            <div class="batton">Перевести на Счет</div>
+                            <!-- <div *ngIf="searchAllFrends(friend.id) else delFriend"><div class="batton" >Удалить из Друзей</div></div>
+                            <ng-template #delFriend><div class="batton"> Добавить в Друзья</div></ng-template> -->
+                        </div>
+                    </div>
+                </div>   
             </div>
         </div>
     </div>
