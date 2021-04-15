@@ -1,34 +1,38 @@
 import { Injectable } from '@angular/core';
-
-import { Users } from '../mocks/mock-users';
+import { environment } from '../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { user } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuhtService {
+export class AuhtService
+{
 
-  Users = Users;
-  
-  constructor() { }
+  private loginUrl = `${environment.apiUrl}/auth`;
 
-  login(name : string, pass : string) : boolean{
-    for (let index = 0; index < Users.length; index++) {
-      if (Users[index].Name === name) {
-        if (Users[index].Password === pass) {
-          this.setUser(Users[index]);
-          return true;
-        }
-      }
-    }return false;
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  login(name : string, pass : string) : Observable<user[]>
+  {
+    return this.http.get<any>(this.loginUrl, {
+      params: new HttpParams()
+            .set(`name`, name)
+            .set(`pass`, pass)
+    });
   }
 
-  logout(){
+  logout() : void
+  {
     localStorage.clear();
   }
 
-  setUser(user : user)  {
-    localStorage.user = JSON.stringify(user);
+  setUser(userId : number) : boolean
+  {
+    return (localStorage.userId = JSON.stringify(userId)) ? true: false;
   }
 
 }

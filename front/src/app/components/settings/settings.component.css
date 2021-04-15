@@ -22,7 +22,15 @@
     padding-left: 25px;
 }
 .settings__menu__display__block-text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 6px;
+}
+.settings__pass{
+    margin-right: 30px;
+    font-size: 14px;
 }
 .settings__menu__display__block input{
     height: 40px;
@@ -35,11 +43,18 @@
     display: flex;
     flex-direction: column;
 }
-.settings__menu__display__batton{
+.settings__batton{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     height: 96px;
     margin: 10px;
+}
+.settings__batton__support{
+    display: flex;
+    justify-content: space-around;
+}
+.settings__batton__output{
+    display: flex;
+    justify-content: space-around;
 }

@@ -26,8 +26,10 @@
 }
 .personal-area__block__data-text{
     margin: 10px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: 20px;
-    margin-right: 20px;
 }
 .personal-area__scores{
     display: flex;

@@ -8,27 +8,33 @@
             <div class="settings__menu__display__block">
                 <div class="settings__menu__display__block-name">
                     <div class="settings__menu__display__block-text">
-                        <div>Имя: {{this.user.Name}}</div>
+                        <div *ngIf="this.user">Имя: {{this.user.Name}}</div>
                     </div>
-                    <input [(ngModel)]="name" type="text" name="name" placeholder="Сменить имя" autocomplete="new-name"  >
+                    <input [(ngModel)]="name" type="text" name="name" placeholder="Сменить имя" autocomplete="new-name" #InputForm1>
                 </div>
                 <div class="settings__menu__display__block-email">
                     <div class="settings__menu__display__block-text">
-                        <div>Email: {{this.user.Email}}</div>
+                        <div *ngIf="this.user">Email: {{this.user.Email}}</div>
                     </div>
-                    <input [(ngModel)]="email" type="text" name="Email" placeholder="Сменить Email" autocomplete="new-email"  >
+                    <input [(ngModel)]="email" type="text" name="Email" placeholder="Сменить Email" autocomplete="new-email" #InputForm2>
                 </div>
                 <div class="settings__menu__display__block-pass">
                     <div class="settings__menu__display__block-text">
-                        <div>Пароль: {{this.user.Password}}</div>
+                        <div>Пароль:</div>
+                        <div class="settings__pass" *ngIf="password">{{passError}}</div>
                     </div>
-                    <input [(ngModel)]="password" type="password" name="password" placeholder="Сменить пароль" autocomplete="new-password"  >
-                    <input [(ngModel)]="password" type="password" name="password" placeholder="Повторить пароль" autocomplete="new-password"  >
+                    <input [(ngModel)]="pass1" name="pass1" type="password" placeholder="Сменить пароль" autocomplete="new-password" #InputForm3>
+                    <input [(ngModel)]="pass2" name="pass2" type="password" placeholder="Повторить пароль" autocomplete="new-password" #InputForm4>
                 </div>
             </div>
-            <div class="settings__menu__display__batton">
-                <img src="../../../assets/img/Support.svg" >
-                <img src="../../../assets/img/output.svg" (click)="output()" routerLink="/">
+            <div class="settings__batton">
+                <div class="settings__batton__support">
+                    <img src="../../../assets/img/Support.svg">
+                </div>
+                <div class="settings__batton__output">
+                    <img src="../../../assets/img/output.svg" (click)="output()" routerLink="/">
+                    <img src="../../../assets/img/save.svg" (click)="replacementName()">
+                </div>
             </div>
         </div>
     </div>

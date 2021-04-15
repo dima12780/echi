@@ -4,13 +4,15 @@
         <div class="">История</div>
     </div>
     <div class="history__contnent">
-        <div class="history__contnent__block" *ngFor="let operation of operations">
-            <div class="history__contnent__block-date">{{operation.date}}</div>
-            <div class="history__contnent__block__display">
-                <div class="history__contnent__block-score">{{operation.score}}</div>
-                <div class="history__contnent__block-time">{{operation.time}}</div>
+        <div *ngIf="this.user">
+            <div class="history__contnent__block" *ngFor="let operation of operations">
+                <div class="history__contnent__block-date">{{operation.date}}</div>
+                <div class="history__contnent__block__display">
+                    <div class="history__contnent__block-score">{{operation.score}}</div>
+                    <div class="history__contnent__block-time">{{operation.time}}</div>
+                </div>
+                <div class="history__contnent__block-operation" [class.consumption__color]="operation.balance">{{operation.balance? "+" : "-" }} {{operation.money}} P</div>
             </div>
-            <div class="history__contnent__block-operation" [class.consumption__color]="operation.balance">{{operation.balance? "+" : "-" }} {{operation.money}} P</div>
         </div>
     </div>
     <div class="history__batton">

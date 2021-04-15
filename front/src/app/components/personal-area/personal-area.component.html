@@ -5,12 +5,12 @@
     </div>
     <div lass="personal-area__block">
         <div class="personal-area__block__data">
-            <div class="personal-area__block__data-text "> Имя: </div>
-            <div class="personal-area__block__data-text "> {{this.user.Name}} </div>
+            <div class="personal-area__block__data-text"> Имя: </div>
+            <div class="personal-area__block__data-text" *ngIf="this.user"> {{this.user.Name}} </div>
         </div>
         <div class="personal-area__block__data spase">
             <div class="personal-area__block__data-text"> Email: </div>
-            <div class="personal-area__block__data-text"> {{this.user.Email}} </div>
+            <div class="personal-area__block__data-text" *ngIf="this.user"> {{this.user.Email}} </div>
         </div>
     </div>
     <div class="personal-area__scores">
@@ -19,13 +19,15 @@
             <div class="personal-area__score__text"> Счета </div>
         </div>
         <div class="personal-area__scores__display">
-            <div class="personal-area__scores__display__score" *ngFor="let score of user.scores" >
-                <img src="../../../assets/img/list.svg" class="personal-area__scores__display__label">
-                <div class="personal-area__scores__display__text">{{score.number}}</div>
-            </div>
-            <div class="personal-area__scores__display__score">
-                <img src="../../../assets/img/plus.svg" class="personal-area__scores__display__label">
-                <div class="personal-area__scores__display__text">Добавить счет</div>
+            <div *ngIf="this.user">
+                <div class="personal-area__scores__display__score" *ngFor="let score of user.scores" >
+                    <img src="../../../assets/img/list.svg" class="personal-area__scores__display__label">
+                    <div class="personal-area__scores__display__text">{{score.number}}</div>
+                </div>
+                <div class="personal-area__scores__display__score" (click)="addScore()">
+                    <img src="../../../assets/img/plus.svg" class="personal-area__scores__display__label">
+                    <div class="personal-area__scores__display__text">Добавить счет</div>
+                </div>
             </div>
         </div>
     </div>

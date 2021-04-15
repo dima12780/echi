@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { Users } from '../../mocks/mock-users';
+import { UserService } from '../../services/user.service';
 import { user } from '../../models/user';
 
 @Component({
@@ -14,8 +14,6 @@ export class FriendsComponent implements OnInit {
   @ViewChild('myInputTwo') myInputTwo!: ElementRef;
   @ViewChild('delFriend') delFriend!: ElementRef;
 
-  Users = Users;
-
   public search: string = "";
   public user!: user;
   public selectedFriend!: user;
@@ -23,48 +21,64 @@ export class FriendsComponent implements OnInit {
   public allFriends: user[] = [];
   public searchFrends: any[] = [];
 
-  constructor() { }
+  constructor(
+    private UserService: UserService
+  ) { }
 
-  ngOnInit(): void {
-    this.user = JSON.parse(localStorage.user);
-    this.selectedFriend = this.user;
-    let MyFriends = this.user.friends;
-    if (MyFriends) {
-      for (let index = 0; index < MyFriends.length; index++) {
-        this.allFriends.push(this.searchAllFrends(this.Users, MyFriends[index]));
-        this.searchFrends.push(this.searchAllFrends(this.Users, MyFriends[index]));
+  ngOnInit(): void
+  {
+    let userId = JSON.parse(localStorage.userId);
+    this.UserService.searchUser(userId).subscribe((result : any) => {
+      this.user = this.UserService.assembly(result[0]);
+      let MyFriends = this.user.friends;
+      for (let score of MyFriends!)
+      {
+        this.searchAllFrends(score);
       }
-    }
+    });
+  }
+
+  searchAllFrends(id: number) {
+    this.UserService.searchUser(id).subscribe((result : any) => {
+       let user = this.UserService.assembly(result[0]);
+      this.allFriends.push(user);
+      this.searchFrends.push(user);
+    })
   }
 
   cleaningInput(bool: boolean){
     bool ? this.myInputOne.nativeElement.value = "" : this.myInputTwo.nativeElement.value = "";
   }
 
-  searchName(input: any[], search: string) {
+  searchName(input: boolean, search: string) 
+  {
     if (search === "") {
       this.searchFrends = this.allFriends;
     }else{
-      search = search.toLowerCase();
-      var output = [];
-      for(var i=0; i<input.length; i++) {
-        if(input[i].Name.toLowerCase().indexOf(search) !== -1 && input[i].id !== this.user.id) {
-          output.push(input[i]);
+      if (input){
+        let users:any = [];
+        this.UserService.searchUsersOfName(search).subscribe((result : any) => {
+          for (let i = 0; i < result.length; i++)
+          {
+            users.push(this.UserService.assembly(result[i]));
+          }
+          this.searchFrends = users;
+        })
+      }else{
+        search = search.toLowerCase();
+        let output = [];
+        for(let i=0; i<this.allFriends.length; i++){
+          if(this.allFriends[i].Name.toLowerCase().indexOf(search) !== -1 && this.allFriends[i].id !== this.user.id){
+            output.push(this.allFriends[i]);
+          }
         }
+        this.searchFrends = output;
       }
-      this.searchFrends = output;
     }
   }
 
-  searchAllFrends(Users: any[], id: number) {
-    for (let index = 0; index < Users.length; index++) {
-      if (Users[index].id === id){
-        return Users[index];
-      } 
-    }
-  }
-
-  onSelect(friend: user): void {
+  onSelect(friend: user): void
+  {
     this.selectedFriend = friend;
   }
 
