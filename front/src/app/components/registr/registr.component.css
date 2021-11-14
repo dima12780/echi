@@ -11,7 +11,7 @@
     margin-top: 45px;
 }
 .registration__form input{
-    margin-top: 50px;
+    margin-top: 30px;
     width: 320px;
     height: 38px;
     font-size: 24px;
@@ -20,8 +20,15 @@
     background-color:#C4C4C4;
 }
 .registration__chek{
-    margin-top: 20px;
+    margin-top: 80px;
     font-size: 18px;
     color:#C4C4C4;
     text-align: center;
+}
+.errno{
+    position: absolute;
+    color:#7a7a7a;
+    top: 370px;
+    left: 41px;
+    font-size: 18px;
 }

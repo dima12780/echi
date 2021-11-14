@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { user } from '../models/user';
 
@@ -16,23 +16,29 @@ export class AuhtService
     private http: HttpClient
   ) { }
 
-  login(name : string, pass : string) : Observable<user[]>
+  login(data : string) : Observable<user[]>
   {
-    return this.http.get<any>(this.loginUrl, {
-      params: new HttpParams()
-            .set(`name`, name)
-            .set(`pass`, pass)
+    return this.http.get<any>(this.loginUrl+'/login', {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic '+ data
+      })
     });
   }
 
-  logout() : void
+  logout(data : string): any
   {
     localStorage.clear();
+    return this.http.get<any>(this.loginUrl+'/logout', {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ data
+      })
+    });
   }
 
-  setUser(userId : number) : boolean
+  setUser(user : user) : boolean
   {
-    return (localStorage.userId = JSON.stringify(userId)) ? true: false;
+    let json = JSON.stringify(user.id +":"+ user.hash);
+    return (localStorage.info = json) ? true: false;
   }
 
 }

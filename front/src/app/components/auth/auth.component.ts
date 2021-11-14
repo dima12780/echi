@@ -25,9 +25,10 @@ export class AuthComponent implements OnInit {
 
   Auth(name: string, password: string)
   {
-    this.auhtService.login(name, password).subscribe(result => {
+    let data = btoa(name + ':' + password);
+    this.auhtService.login(data).subscribe(result => {
       if (result.length !== 0) {
-        this.auhtService.setUser(result[0].id);
+        this.auhtService.setUser(result[0]);
         this.router.navigate(['/main']);
       }else this.errno = "Неверные Имя Пользователя или Пароль";
     })

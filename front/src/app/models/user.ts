@@ -10,15 +10,16 @@ export class user {
   public scores?: score[];
   public friends?: number[];
   public history?: operation[];
+  public hash: string;
 
-
-    constructor(id: number, name: string, email: string, pass: string, scores?: score[], friends?: number[], history?: operation[]) {
-      this.id = id;
-      this.Name = name;
-      this.Email = email;
-      this.Password = pass;
-      this.scores = scores;
-      this.friends = friends;
-      this.history = history;
+    constructor(data : any) {
+      this.id = data.id;
+      this.Name = data.name;
+      this.Email = data.email;
+      this.Password = data.pass;
+      this.scores = data.scores ?? [];
+      this.friends = data.friends ?? [];
+      this.history = data.history ?? [];
+      this.hash = data.hash;
     }
   }

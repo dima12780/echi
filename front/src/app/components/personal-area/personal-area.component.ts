@@ -9,7 +9,7 @@ import { user } from '../../models/user';
 })
 export class PersonalAreaComponent implements OnInit {
 
-  user!: user;
+  public user!: user;
   public name!: string;
   public email!: string;
   public password!: string;
@@ -20,13 +20,13 @@ export class PersonalAreaComponent implements OnInit {
 
   ngOnInit(): void
   {
-    let userId = JSON.parse(localStorage.userId);
-    this.userinit(userId);
+    let data = JSON.parse(localStorage.info).split(":");
+    this.userinit(data);
   }
 
-  userinit(userId: number): void
+  userinit(data: string[]): void
   {
-    this.UserService.searchUser(userId).subscribe((result : any) => {
+    this.UserService.dowloadUser(data).subscribe((result : any) => {
       this.user = this.UserService.assembly(result[0]);
     });
   }
@@ -42,13 +42,13 @@ export class PersonalAreaComponent implements OnInit {
 
   addScore()
   {
-    let data = this.user.scores!;
-    data.push({
+    let data = 
+      [{
       "money" : 0,
-      "number" : "9601-" + this.newNumber(4) + "-" + this.newNumber(4)
-    });
-    this.UserService.replacement(this.user.id, data, "score").subscribe((result : any) => {
-      this.userinit(this.user.id);
+      "number" : `96${this.user.id}-` + this.newNumber(4) + "-" + this.newNumber(2) + `${this.user.id}`
+      }];
+    this.UserService.replacement([``, this.user.hash], data, "score").subscribe((result : any) => {
+      this.userinit([`${this.user.id}`, this.user.hash]);
     });
   }
 

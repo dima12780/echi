@@ -27,19 +27,19 @@ export class FriendsComponent implements OnInit {
 
   ngOnInit(): void
   {
-    let userId = JSON.parse(localStorage.userId);
-    this.UserService.searchUser(userId).subscribe((result : any) => {
+    let data = JSON.parse(localStorage.info).split(":");
+    this.UserService.dowloadUser(data).subscribe((result : any) => {
       this.user = this.UserService.assembly(result[0]);
       let MyFriends = this.user.friends;
-      for (let score of MyFriends!)
+      for (let score in MyFriends!)
       {
-        this.searchAllFrends(score);
+        this.searchAllFrends(MyFriends![score]);
       }
     });
   }
 
   searchAllFrends(id: number) {
-    this.UserService.searchUser(id).subscribe((result : any) => {
+    this.UserService.dowloadUser([`${id}`, this.user.hash]).subscribe((result : any) => {
        let user = this.UserService.assembly(result[0]);
       this.allFriends.push(user);
       this.searchFrends.push(user);
@@ -57,7 +57,7 @@ export class FriendsComponent implements OnInit {
     }else{
       if (input){
         let users:any = [];
-        this.UserService.searchUsersOfName(search).subscribe((result : any) => {
+        this.UserService.searchUsersOfName(search, this.user.hash).subscribe((result : any) => {
           for (let i = 0; i < result.length; i++)
           {
             users.push(this.UserService.assembly(result[i]));

@@ -3,12 +3,13 @@
         <img src="../../assets/img/Ellipse.svg" class="ellips">Регистрация
     </div>
     <div class="registration__form">
-        <input type="text" name="Name" placeholder="Имя">
-        <input type="text" name="Email" placeholder="Email">
-        <input type="tsext" name="Password" placeholder="Пароль">
+        <input type="text" name="Name" placeholder="Имя" [(ngModel)]="name">
+        <input type="text" name="Email" placeholder="Email" [(ngModel)]="email">
+        <input type="pass" name="Password" placeholder="Пароль" [(ngModel)]="pass">
     </div>
-    <div class="registration__chek"><label><input type="checkbox" value="consent"> Я согласен на обработку персональных данных</label></div>
-    <div class="button" routerLink="/confirm">
+    <div class="registration__chek"><label><input type="checkbox" value="consent" > Я согласен на обработку персональных данных</label></div>
+    <div class="errno" *ngIf="errno">{{errno}}</div>
+    <div class="button" (click)="createUser()"> <!-- routerLink="/confirm" (click)="consent = !consent"-->
         <div class="button-text">Далее</div>
     </div>
     <div class="button" routerLink="/auth">

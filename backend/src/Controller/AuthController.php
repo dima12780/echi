@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\User;
-// use App\Entity\different;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\AuthRepository;
@@ -22,15 +21,28 @@ class AuthController extends AbstractController
     {
         $this->repository = new AuthRepository($registry, $em);
     }
+
     /**
-     * @Route("/auth", methods={"GET"}, name="auth")
+     * @Route("/auth/login", methods={"GET"}, name="auth_login")
      */
-    public function authLogin(Request $request): JsonResponse
+    public function login(Request $request): JsonResponse
     {
-        $data = $request->query->all();
+        $data = $request->headers->all();
         return new JsonResponse(
-            $this->repository->authLogin($data),
+            $this->repository->login($data),
             Response::HTTP_OK
+        );
+    }
+
+    /**
+     * @Route("/auth/logout", methods={"GET"}, name="auth_logout")
+     */
+    public function logout(Request $request): Response
+    {
+        $data = $request->headers->all();
+        $this->repository->logout($data);
+        return new Response(
+            Response::HTTP_NO_CONTENT
         );
     }
 }

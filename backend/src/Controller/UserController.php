@@ -38,11 +38,14 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{id}", methods={"GET"}, name="user_searchOne")
      */
-    public function searchOne($id): JsonResponse
+    public function searchOne(Request $request, $id): JsonResponse
     {
-
+        $data = $request->headers->all();
+        list($type, $hash) = explode(" ", $data['authorization'][0]);
+        $entity = $this->repository->searchOne($id);
+        $entity[0]->hash = $hash;
         return new JsonResponse(
-            $this->repository->searchOne($id),
+            $entity,
             Response::HTTP_OK
         );
     }
@@ -53,13 +56,7 @@ class UserController extends AbstractController
     public function create(Request $request)
     {
         $data = json_decode($request->getContent(), true)[0];
-        if(isset($data["autoCreate"]) && $data["autoCreate"] === true)
-        {
-            $User = new User([
-                "name" => "Dima ".rand(-9, 9),
-                "email" => "dima@yandex.ru"
-            ]);
-        }else $User = new User($data);
+        $User = new User($data);
         $this->repository->save($User);
         return new JsonResponse(
             array('Saved new User with id ' => $User->getId()),
@@ -72,7 +69,7 @@ class UserController extends AbstractController
      */
     public function update(Request $request, $id)
     {
-        $data = json_decode($request->getContent());
+        $data = json_decode($request->getContent(), true);
         $this->repository->update($id, $data);
         return new JsonResponse(
             null,

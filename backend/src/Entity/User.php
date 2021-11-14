@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,17 +36,17 @@ class User
     public $password;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     public $scores;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     public $friends;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     public $history;
 
@@ -53,17 +55,20 @@ class User
      */
     public $isDeleted;
 
-    public function __construct(array $data = array()){
-        $different = new different("scores");
+    public $hash;
+
+    public function __construct(array $data = array())
+    {
         $this->isDeleted = false;
-        $this->password = $different->random(3);
-        $this->scores = [$different->score];
         $this->update($data);
     }
 
-    public function update($data) {
-        foreach ($data as $property => $value) {
-            $this->$property = $value;
+    public function update($data)
+    {
+        foreach ($data as $property => $value)
+        {
+            if($property === 'scores') $this->$property[] = $value;
+            else $this->$property = $value;
         }
     }
 
@@ -71,13 +76,4 @@ class User
         $this->isDeleted = true;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
 }

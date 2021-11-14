@@ -19,20 +19,20 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void
   {
-    let userId = JSON.parse(localStorage.userId);
-    this.userinit(userId);
+    let data = JSON.parse(localStorage.info).split(":");
+    this.userinit(data);
   }
 
-  userinit(userId: number): void
+  userinit(data: string[]): void
   {
-    this.UserService.searchUser(userId).subscribe((result : any) => {
+    this.UserService.dowloadUser(data).subscribe((result : any) => {
       this.user = this.UserService.assembly(result[0]);
-      this.operations = this.user.history!;
+      this.operations = this.user.history ?? [];
     });
   }
 
   getHistory(type : boolean){
-    let history = this.user.history!;
+    let history = this.user.history ?? [];
     this.operations = [];
     for (let index = 0; index < history.length; index++) {
       if (history[index].balance === type) {

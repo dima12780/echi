@@ -30,18 +30,18 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void
   {
-    let userId = JSON.parse(localStorage.userId);
-    this.userinit(userId);
+    let data = JSON.parse(localStorage.info).split(":");
+    this.userinit(data);
   }
 
-  userinit(userId: number): void
+  userinit(data: string[]): void
   {
-    this.UserService.searchUser(userId).subscribe((result : any) => {
+    this.UserService.dowloadUser(data).subscribe((result : any) => {
       this.user = this.UserService.assembly(result[0]);
     });
   }
 
-  replacementName(): void
+  replacement(): void
   {
     this.password = false;
     let data = [
@@ -49,8 +49,9 @@ export class SettingsComponent implements OnInit {
       this.email ?? this.user.Email,
       (typeof(this.pass1) === 'string' && this.checkPass()) ? this.pass1 : this.user.Password,
     ];
-    this.UserService.replacement(this.user.id, data, "info").subscribe((result : any) => {
-      this.userinit(this.user.id);
+    this.UserService.replacement([`${this.user.id}`, this.user.hash], data, "info")
+    .subscribe((result : any) => {
+      this.userinit([`${this.user.id}`, this.user.hash]);
     });
     this.cleaningInput();
   }
@@ -80,7 +81,7 @@ export class SettingsComponent implements OnInit {
 
   output(): void
   {
-    this.auhtService.logout();
+    this.auhtService.logout(this.user.hash);
   }
 
 }

@@ -19,7 +19,7 @@ export class ConfirmComponent implements OnInit {
   {
     if(this.code.length === 5)
     {
-      console.log(this.code);
+      // console.log(this.code);
       setTimeout(() => {this.router.navigate(['/auth'])}, 2000);
     }
 

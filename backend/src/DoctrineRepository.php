@@ -50,12 +50,11 @@ class DoctrineRepository extends ServiceEntityRepository
         $entity->update($data);
         $this->entityManager->persist($entity);
         $this->entityManager->flush($entity);
-        
     }
 
     public function delete($id)
     {
-        $entity = $this->searchOne($id);
+        $entity = $this->searchOne($id)[0];
         $entity->delete();
         $this->entityManager->flush($entity);
     }

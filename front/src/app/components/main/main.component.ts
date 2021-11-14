@@ -19,8 +19,8 @@ export class MainComponent implements OnInit
 
   ngOnInit(): void
   {
-    let userId = JSON.parse(localStorage.userId);
-    this.UserService.searchUser(userId).subscribe((result : any) => {
+    let data = JSON.parse(localStorage.info).split(":");
+    this.UserService.dowloadUser(data).subscribe((result : any) => {
       this.user = this.UserService.assembly(result[0]);
       let scores = this.user.scores;
       for (let score of scores!)

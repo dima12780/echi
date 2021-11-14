@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { user } from '../models/user';
@@ -9,37 +9,41 @@ import { user } from '../models/user';
 })
 export class UserService {
 
-  public user$! : user;
   private loginUrl = `${environment.apiUrl}/user`;
+
+  private headers(hash: string) {
+    return new HttpHeaders({
+      'authorization': 'Bearer '+ hash
+    })
+  }
 
   constructor(
     private http: HttpClient
   ) { }
 
-  searchUsersOfName(name : string) : Observable<user[]>
+  searchUsersOfName(name : string, data: string) : Observable<user[]>
   {
     return this.http.get<any>(this.loginUrl, {
+      headers: this.headers(data),
       params: new HttpParams()
             .set(`name`, name)});
   }
 
-  searchUser(id : number) : Observable<user[]>
+  createUser(body : any) : Observable<any[]>
   {
-    return this.http.get<any>(this.loginUrl + "/" + id);
+    return this.http.post<any>(this.loginUrl, body);
+  }
+
+  dowloadUser(data : string[]) : Observable<user[]>{
+    return this.http.get<any>(this.loginUrl + "/" + data[0], {
+      headers: this.headers(data[1])
+    });
   }
 
   assembly(data : any) : user
   {
-    this.user$ = new user(
-      data.id,
-      data.name,
-      data.email,
-      data.password,
-      this.substitution(data.scores),
-      this.substitution(data.friends),
-      this.substitution(data.history)
-    );
-    return this.user$;
+    let user$: user = new user(data);
+    return user$;
   }
 
   substitution (data : any) : any[]
@@ -56,22 +60,35 @@ export class UserService {
     return [];
   }
 
-  replacement(id: number, data : any, that: string)
+  replacement(hash: string[], data : any, type: string)
   {
-    switch (that) {
+    let body: any;
+    switch (type) {
       case "info":
-        return this.http.put<any>(this.loginUrl+"/"+id, {
+        body = {
           "name" : data[0],
           "email" : data[1],
           "password" : data[2]
+        }
+        return this.http.put<any>(this.loginUrl+"/"+hash[0], body, {
+          headers: this.headers(hash[1])
         });
+        break;
       case "score":
-        return this.http.put<any>(this.loginUrl+"/"+id, {
+        body = {
           "scores": data
+        }
+        return this.http.put<any>(this.loginUrl+"/"+hash[0], body, {
+          headers: this.headers(hash[1])
         });
+        break;
       default:
-        return this.http.get<any>(this.loginUrl+"/"+id)
+        return this.http.get<any>(this.loginUrl+"/"+hash[0], {
+          headers: this.headers(hash[1])
+        });
+        break;
     }
+
   }
 
 }

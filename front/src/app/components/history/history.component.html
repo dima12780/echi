@@ -4,8 +4,8 @@
         <div class="">История</div>
     </div>
     <div class="history__contnent">
-        <div *ngIf="this.user">
-            <div class="history__contnent__block" *ngFor="let operation of operations">
+        <div *ngFor="let operation of operations">
+            <div class="history__contnent__block"  *ngIf="operation" >
                 <div class="history__contnent__block-date">{{operation.date}}</div>
                 <div class="history__contnent__block__display">
                     <div class="history__contnent__block-score">{{operation.score}}</div>
